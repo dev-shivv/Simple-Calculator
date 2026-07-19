@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simple Calculator</title>
+  
+
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      
+  
+      
+    }
+
+    .btC {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+    
+    }
+
+    btn-dark {
+      padding: 18px;
+      font-size: 14px;
+      border-radius: 25%;
+      background-color: black;
+      color: white;
+      transition: transform 0.2s ease, box-shadow 0.4s ease;
+    }
+    btn-dark:active{
+      transform: scale(1.1) translateY(2px);
+      box-shadow: inset 1px 5px 2px white;
+    }
+    
+    .calcButton {
+      padding: 18px;
+      font-size: 14px;
+      border-radius: 25%;
+      background-color: black;
+      color: white;
+      transition: transform 0.2s ease, box-shadow 0.4s ease;
+    }
+    .calcButton:active{
+      transform: scale(1.1) translateY(2px);
+      box-shadow: inset 1px 5px 2px white;
+    }
+
+    p {
+      font-size: 28px;
+      color: green;
+    }
+
+    .screen {
+      display: flex;
+      flex-direction: column;
+      background-color: #B6B6B6;
+      width: 68%;
+      border: 4px solid black;
+      overflow: hidden;
+      border-radius: 5px 5px 0 0;
+    }
+
+    .calcBody {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid black;
+      padding: 6px;
+      border-radius: 0px 0px 10px 10px;
+      background-color: black;
+    }
+
+    .calcBodyDrk {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid black;
+      padding: 6px;
+      border-radius: 0px 0px 10px 10px;
+      background-color: black;
+    }
+
+    #screen {
+      padding: 14px;
+    }
+
+    .screenCont {
+      display: flex;
+    }
+   /*.... 
+    .white-mode{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid gray;
+      padding: 6px;
+      border-radius: 0px 0px 10px 10px;
+      background-color: white;
+    }
+    */
+    .lastRow {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      gap: 4px;
+    
+    }
+    .innerLasRow{
+      display: flex;
+      flex-direction: column;
+      
+    }
+    .pack{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+    .bottomRow{
+      display: flex;
+      gap: 8px;
+    }
+    #screen {
+      font-family: 'CalcFont';
+      font-size: 42px;
+    }
+    @font-face {
+  font-family: 'CalcFont';
+  src: url('digital-7.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+  </style>
+</head>
+
+<body>
+  <h1>Simple Calculator</h1>
+  
+  <div class="screen">
+    <div class="screenCont">
+      <p id="screen"></p>
+      <p id="sign" style="text-align: right;"></p>
+    </div>
+  </div>
+    
+  <div class="calcBody" id="bodyButtons">
+    <div class="btC">
+      <button class="calcButton" data-value="AC">AC</button>
+      <button id="btn" class="calcButton" data-value="÷">÷</button>
+      <button class="calcButton" data-value="×">×</button>
+      <button class="calcButton" data-value="C">C</button>
+    </div>
+  
+    <div class="btC">
+      <button class="calcButton" data-value="7">7</button>
+      <button class="calcButton" data-value="8">8</button>
+      <button class="calcButton" data-value="9">9</button>
+      <button class="calcButton" data-value="+" >+</button>
+    </div>
+    
+    <div class="btC">
+      <button class="calcButton" data-value="4">4</button>
+      <button class="calcButton" data-value="5">5</button>
+      <button class="calcButton" data-value="6">6</button>
+      <button class="calcButton" data-value="-">-</button>
+    </div>
+    
+    <div class="btC">
+      <div class="lastRow">
+        
+        <div class="innerLasRow">
+        <div class="pack">
+        <button class="calcButton" data-value="1">1</button>
+        <button class="calcButton" data-value="2">2</button>
+        <button class="calcButton" data-value="3">3</button>
+        <!--<button id="operator" data-value="=">=</button>-->
+        </div>
+        </div>
+        <div class="btC">
+          <div class="bottomRow">
+          <button class="calcButton" data-value="0">0</button>
+          <button class="calcButton" data-value="00">00</button>
+          <button class="calcButton" data-value=".">.</button>
+          </div>
+          </div>
+        
+        
+      
+    </div>
+    <button data-value="=" style="padding-top: 52px; padding-bottom: 52px; border-radius: 14px;" class="calcButton">=</button>
+      </div>
+  </div>
+
+  
+</body>
+
+<script>
+const buttonBody = document.getElementById("bodyButtons");
+const screen = document.getElementById("screen")
+const sign = document.getElementById("sign")
+
+
+let content = ""
+let firstNo = ""
+let operator = ""
+buttonBody.addEventListener("click", (e) => {
+  
+  if (e.target.tagName !== "BUTTON") return;
+  const pressed = e.target.dataset.value;
+  console.log(pressed);
+  
+  
+  if (pressed === "AC") {
+    content = "";
+    firstNo = "";
+    operator = ""
+    screen.textContent = content;
+    sign.textContent = operator;
+    console.log("Calc Reset")
+  } else if (pressed === "C") {
+      content = Number(String(content).slice(0, -1));
+      screen.textContent = content;
+  
+    console.log("previous text removed")
+  } else if (screen.textContent === 0 || screen.textContent === '0') {
+    content += pressed;
+    
+    screen.textContent = content;
+  } else if (pressed === "+") {
+    firstNo = content;
+    operator = "+";
+    content = "";
+    sign.textContent = "+";
+    screen.textContent = firstNo;
+  } else if (pressed === "-") {
+    firstNo = content;
+    operator = "-";
+    content = "";
+    sign.textContent = "-";
+    screen.textContent = firstNo;
+  } else if (pressed === "×") {
+    firstNo = content;
+    operator = "×";
+    content = "";
+    sign.textContent = "×";
+    screen.textContent = firstNo;
+  } else if (pressed === "÷") {
+    firstNo = content;
+    operator = "÷";
+    content = "";
+    sign.textContent = "÷";
+    screen.textContent = firstNo;
+  } else if (pressed === "=") {
+    if (operator === "+") {
+      let sum = +firstNo + +content;
+      content = sum;
+      screen.textContent = sum;
+      sign.textContent = "=";
+    } else if (operator === "-") {
+      let sub = +firstNo - +content;
+      content = sub;
+      screen.textContent = sub;
+      sign.textContent = "=";
+    } else if (operator === "×") {
+      let mul = +firstNo * +content;
+      content = mul;
+      screen.textContent = mul;
+      sign.textContent = "=";
+    } else if (operator === "÷") {
+      let divd = +firstNo / +content;
+      content = divd;
+      screen.textContent = divd;
+      sign.textContent = "=";
+    }
+    
+  } else {
+    if (pressed !== "C" && pressed !== "AC") {
+      content += pressed
+      screen.textContent = content;
+      sign.textContent = "";
+    };
+  };
+  
+  
+});
+</script>
+
+</html>
